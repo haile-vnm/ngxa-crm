@@ -8,6 +8,7 @@ import { IconsProviderModule } from '../icons-provider.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @NgModule({
   declarations: [],
@@ -20,6 +21,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     IconsProviderModule,
     NzFormModule,
     NzNotificationModule,
+    NzLayoutModule,
     NzButtonModule
   ],
   exports: [
@@ -31,6 +33,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     IconsProviderModule,
     NzFormModule,
     NzNotificationModule,
+    NzLayoutModule,
     NzButtonModule
   ]
 })

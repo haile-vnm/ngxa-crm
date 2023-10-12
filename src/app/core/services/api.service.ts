@@ -20,4 +20,8 @@ export class ApiService {
 
     return of(user);
   }
+
+  getUsers() {
+    return of(this.users);
+  }
 }

@@ -1,0 +1,5 @@
+<div nz-row nzJustify="center" nz>
+  <div *ngFor="let user of users$ | async" nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzLg]="{ span: 8 }">
+    <app-user></app-user>
+  </div>
+</div>
