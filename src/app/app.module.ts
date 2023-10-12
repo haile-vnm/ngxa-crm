@@ -26,7 +26,7 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    IconsProviderModule,
+    // IconsProviderModule,
     NzLayoutModule,
     NzMenuModule
   ],
