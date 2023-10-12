@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +12,27 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
 })
 export class LoginComponent {
   validateForm: FormGroup<{
-    userName: FormControl<string>;
+    email: FormControl<string>;
     password: FormControl<string>;
     remember: FormControl<boolean>;
   }> = this.fb.group({
-    userName: ['', [Validators.required]],
+    email: ['', [Validators.required]],
     password: ['', [Validators.required]],
     remember: [true]
   });
 
-  submitForm(): void {
+  constructor(
+    private router: Router,
+    private fb: NonNullableFormBuilder,
+    private notificationService: NzNotificationService,
+    private userService: UsersService,
+    private authService: AuthService
+  ) {}
+
+  submitForm() {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      const { email, password } = this.validateForm.value;
+      this.login(email!, password!);
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -30,5 +43,21 @@ export class LoginComponent {
     }
   }
 
-  constructor(private fb: NonNullableFormBuilder) {}
+  private login(email: string, password: string) {
+    this.authService.login(email!, password!).subscribe(user => {
+      this.userService.setCurrent(user);
+      this.notificationService.create(
+        'success',
+        'Login',
+        'You have successfully logged in.'
+      );
+      this.router.navigate(['/']);
+    }, error => {
+      this.notificationService.create(
+        'error',
+        'Login',
+        error.message
+      );
+    })
+  }
 }

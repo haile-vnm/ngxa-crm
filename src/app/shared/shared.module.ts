@@ -7,6 +7,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { IconsProviderModule } from '../icons-provider.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     NzInputModule,
     IconsProviderModule,
     NzFormModule,
+    NzNotificationModule,
     NzButtonModule
   ],
   exports: [
@@ -28,6 +30,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     NzInputModule,
     IconsProviderModule,
     NzFormModule,
+    NzNotificationModule,
     NzButtonModule
   ]
 })
