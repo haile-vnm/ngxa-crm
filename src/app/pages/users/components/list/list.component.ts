@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import User from 'src/app/core/models/user';
 import { UsersService } from 'src/app/core/services/users.service';
 
@@ -15,7 +15,7 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.users$ = this.userService.getUsers();
+    this.users$ = this.userService.getUsers().pipe(filter(Boolean));
   }
 
 }
