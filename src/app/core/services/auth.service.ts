@@ -1,17 +1,35 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { first } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedIn$ = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private apiService: ApiService
-  ) { }
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   login(email: string, password: string) {
-    return this.apiService.login(email, password);
+    return this.apiService.login(email, password).pipe(
+      tap(() => this.loggedIn$.next(true))
+    );
+  }
+
+  canActivateGuard() {
+    return this.loggedIn$.pipe(
+      map(loggedIn => {
+        if (loggedIn) {
+          return true;
+        }
+
+        this.router.navigate(['auth', 'login']);
+        return false;
+      })
+    );
   }
 }
