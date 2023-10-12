@@ -1,1 +1,20 @@
-<p>user works!</p>
+<nz-card [nzActions]="[actionSetting, actionEdit]">
+  <nz-card-meta
+    [nzTitle]="user.name"
+    [nzDescription]="user.email"
+    [nzAvatar]="avatarTemplate"
+  ></nz-card-meta>
+</nz-card>
+<ng-template #avatarTemplate>
+  <nz-avatar [nzSrc]="'https://i.pravatar.cc/150?u=' + user.email"></nz-avatar>
+</ng-template>
+<ng-template #actionSetting>
+  <a nz-button nzType="text" [routerLink]="[user.id]">
+    <span nz-icon nzType="setting"></span>
+  </a>
+</ng-template>
+<ng-template #actionEdit>
+  <a nz-button nzType="link" nzDanger>
+    <span nz-icon nzType="delete"></span>
+  </a>
+</ng-template>

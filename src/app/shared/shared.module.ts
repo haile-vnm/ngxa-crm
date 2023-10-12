@@ -9,6 +9,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @NgModule({
   declarations: [],
@@ -22,6 +24,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     NzFormModule,
     NzNotificationModule,
     NzLayoutModule,
+    NzCardModule,
+    NzAvatarModule,
     NzButtonModule
   ],
   exports: [
@@ -34,6 +38,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     NzFormModule,
     NzNotificationModule,
     NzLayoutModule,
+    NzCardModule,
+    NzAvatarModule,
     NzButtonModule
   ]
 })
