@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { filter, switchMap } from 'rxjs';
 import User, { ROLES } from 'src/app/core/models/user';
@@ -24,6 +24,7 @@ export class EditUserComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private fb: NonNullableFormBuilder,
     private nzNotiService: NzNotificationService,
+    private router: Router,
     private userService: UsersService
   ) {}
 
@@ -59,6 +60,7 @@ export class EditUserComponent implements OnInit {
       next: user => {
         this.user = user;
         this.nzNotiService.success('User', `Update "${this.user.name}" successfully`);
+        this.router.navigate(['..'], { relativeTo: this.activateRoute })
       },
       error: (error) => {
         this.nzNotiService.success('User', error.message);
