@@ -37,4 +37,8 @@ export class UsersService {
       filter(Boolean),
       switchMap(users => of(users.find(user => user.id === id))))
   }
+
+  update(id: string, user: Partial<User>) {
+    return this.apiService.updateUser(id, user)
+  }
 }

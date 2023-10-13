@@ -1,19 +1,31 @@
-<h2 *ngIf="user" class="title">Edit {{user.name}}</h2>
-
-<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-  <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your name!">
-      <nz-input-group nzPrefixIcon="user">
-        <input type="text" nz-input formControlName="name" placeholder="name" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your Email!">
-      <nz-input-group nzPrefixIcon="mail">
-        <input nz-input formControlName="email" placeholder="email" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <button nz-button class="login-form-button login-form-margin" nzType="primary">Update</button>
-</form>
+<div class="form-wrapper">
+  <h2 *ngIf="user" class="title">Edit {{user.name}}</h2>
+  
+  <form nz-form [formGroup]="userForm" class="login-form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your name!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="name" placeholder="name" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Email!">
+        <nz-input-group nzPrefixIcon="mail">
+          <input nz-input formControlName="email" placeholder="email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-select nzMode="multiple" nzPlaceHolder="Select user roles" formControlName="roles">
+        <nz-option
+          *ngFor="let role of userRoles"
+          [nzLabel]="role"
+          [nzValue]="role"
+          [nzHide]="isRoleSelected(role)"
+        ></nz-option>
+      </nz-select>
+    </nz-form-item>
+    <button nz-button class="login-form-button login-form-margin" nzType="primary">Update</button>
+  </form>
+</div>

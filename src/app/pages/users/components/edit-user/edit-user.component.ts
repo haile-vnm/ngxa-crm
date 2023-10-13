@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { filter, switchMap } from 'rxjs';
-import User from 'src/app/core/models/user';
+import User, { ROLES } from 'src/app/core/models/user';
 import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
@@ -12,15 +13,17 @@ import { UsersService } from 'src/app/core/services/users.service';
 })
 export class EditUserComponent implements OnInit {
   user: User;
-  validateForm: FormGroup<{
+  userForm: FormGroup<{
     email: FormControl<string>;
-    role: FormControl<string>;
     name: FormControl<string>;
+    roles: FormControl<string[]>;
   }>;
+  userRoles = ROLES;
 
   constructor(
     private activateRoute: ActivatedRoute,
     private fb: NonNullableFormBuilder,
+    private nzNotiService: NzNotificationService,
     private userService: UsersService
   ) {}
 
@@ -35,10 +38,10 @@ export class EditUserComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.validateForm.valid) {
-      this.update(this.validateForm.value);
+    if (this.userForm.valid) {
+      this.update(this.userForm.value);
     } else {
-      Object.values(this.validateForm.controls).forEach(control => {
+      Object.values(this.userForm.controls).forEach(control => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
@@ -47,16 +50,27 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  private update(user: Partial<User>) {
+  isRoleSelected(role: string) {
+    return this.userForm.get('roles')?.value.includes(role)
+  }
 
+  private update(data: Partial<User>) {
+    this.userService.update(this.user.id, data).subscribe({
+      next: user => {
+        this.user = user;
+        this.nzNotiService.success('User', `Update "${this.user.name}" successfully`);
+      },
+      error: (error) => {
+        this.nzNotiService.success('User', error.message);
+      }
+    })
   }
 
   private initialForm() {
-    this.validateForm = this.fb.group({
+    this.userForm = this.fb.group({
       name: [this.user.name, [Validators.required]],
       email: [this.user.email, [Validators.required]],
-      role: [this.user.role || '', [Validators.required]],
-    })
-
+      roles: [this.user.roles || []],
+    });
   }
 }

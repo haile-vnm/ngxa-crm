@@ -1,5 +1,17 @@
 :host {
-  .title {
-    text-align: center;
+  display: flex;
+  justify-content: center;
+
+  .form-wrapper {
+    min-width: 400px;
+    max-width: 600px;
+
+    .title {
+      text-align: center;
+    }
+
+    nz-select {
+      width: 100%;
+    }
   }
 }

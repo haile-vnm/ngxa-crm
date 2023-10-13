@@ -11,6 +11,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     NzLayoutModule,
     NzCardModule,
     NzAvatarModule,
+    NzSelectModule,
     NzButtonModule
   ],
   exports: [
@@ -40,6 +42,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
     NzLayoutModule,
     NzCardModule,
     NzAvatarModule,
+    NzSelectModule,
     NzButtonModule
   ]
 })

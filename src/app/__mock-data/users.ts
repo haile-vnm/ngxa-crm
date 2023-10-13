@@ -4,7 +4,7 @@ export default [
     "age": 30,
     "address": "123 Main Street",
     "id": "1",
-    "role": "admin",
+    "roles": ["admin"],
     "email": "admin@example.com"
   },
   {
@@ -19,7 +19,7 @@ export default [
     "age": 35,
     "address": "789 Oak Drive",
     "id": "3",
-    "role": "admin",
+    "roles": ["admin"],
     "email": "robertjohnson@example.com"
   }
 ]

@@ -4,5 +4,7 @@ export default interface User {
   name: string;
   age: number;
   address: string;
-  role?: string;
+  roles?: string[];
 }
+
+export const ROLES = ['admin', 'developer', 'owner'];

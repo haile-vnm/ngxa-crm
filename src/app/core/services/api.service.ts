@@ -22,6 +22,22 @@ export class ApiService {
   }
 
   getUsers() {
-    return of(this.users);
+    return of([...this.users]);
+  }
+
+  updateUser(id: string, userData: Partial<User>) {
+    let updatedUser: User | undefined;
+    this.users.forEach(user => {
+      if (id === user.id) {
+        Object.assign(user, userData);
+        updatedUser = { ...user };
+      }
+    });
+
+    if (updatedUser) {
+      return of(updatedUser);
+    }
+    
+    return throwError(() => ({ code: 404, message: 'User not found' }))
   }
 }
