@@ -8,11 +8,10 @@ import { UserComponent } from './components/user/user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 
-
 @NgModule({
   imports: [
     UsersRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [UsersComponent, ListComponent, UserComponent, EditUserComponent],
   exports: [UsersComponent]

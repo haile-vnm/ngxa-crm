@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 export class AuthService {
   private loggedIn$ = new BehaviorSubject<boolean>(false);
 
+  get authenticated() {
+    return this.loggedIn$.asObservable();
+  }
+
   constructor(
     private apiService: ApiService,
     private router: Router

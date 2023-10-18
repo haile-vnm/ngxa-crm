@@ -12,12 +12,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { AuthorizerModule } from './shared/modules/authorizer/authorizer.module';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { AuthenticatedComponent } from './pages/authenticated/authenticated.component';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent,
+    AuthenticatedComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +32,9 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzEmptyModule,
+    AuthorizerModule.forRoot(),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

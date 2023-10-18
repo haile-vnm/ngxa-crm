@@ -12,10 +12,12 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { AuthorizerModule } from './modules/authorizer/authorizer.module';
 
 @NgModule({
   declarations: [],
   imports: [
+    AuthorizerModule.forChild(),
     CommonModule,
     NzGridModule,
     FormsModule,
@@ -43,6 +45,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzCardModule,
     NzAvatarModule,
     NzSelectModule,
+    AuthorizerModule,
     NzButtonModule
   ]
 })

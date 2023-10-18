@@ -1,4 +1,4 @@
-<nz-card [nzActions]="[actionSetting, actionEdit]">
+<nz-card [nzActions]="(['delete', 'user'] | canIt | async) && [actionSetting, actionEdit] || [actionSetting]">
   <nz-card-meta
     [nzTitle]="user.name"
     [nzDescription]="user.email"
@@ -14,7 +14,7 @@
   </a>
 </ng-template>
 <ng-template #actionEdit>
-  <a nz-button nzType="link" nzDanger>
+  <a *canIt="['delete', 'user']" nz-button nzType="link" nzDanger>
     <span nz-icon nzType="delete"></span>
   </a>
 </ng-template>
