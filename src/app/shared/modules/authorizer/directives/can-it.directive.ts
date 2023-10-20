@@ -1,6 +1,6 @@
 import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Request } from '../types/permission';
-import { CanItService } from '../public-api';
+import { CanItService } from '..';
 import { Subscription } from 'rxjs';
 
 @Directive({

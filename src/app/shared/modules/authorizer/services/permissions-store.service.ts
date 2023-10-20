@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import ProvidedPermissions from '../types/provided-permissions';
-
+import { ReplaySubject } from 'rxjs';
+import PermissionsState from '../types/permissions-state';
 @Injectable()
 export class PermissionsStore {
-  private permissions$ = new BehaviorSubject<ProvidedPermissions>({ allow: [] });
+  private state$ = new ReplaySubject<PermissionsState>(1);
 
-  constructor() {
-    console.log('contructor permission store service');
-  }
-  
   get() {
-    return this.permissions$.asObservable();
+    return this.state$.asObservable();
   }
 
-  update(permissions: ProvidedPermissions) {
-    this.permissions$.next(permissions);
+  update(permissions: PermissionsState) {
+    this.state$.next(permissions);
   }
 }

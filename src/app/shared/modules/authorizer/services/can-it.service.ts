@@ -1,6 +1,6 @@
-import { Injectable, OnDestroy, SimpleChange } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Subscription, of, switchMap } from 'rxjs';
-import ProvidedPermissions from '../types/provided-permissions';
+import PermissionsState from '../types/permissions-state';
 import { PermissionsStore } from './permissions-store.service';
 import { Request } from '../types/permission';
 
@@ -14,7 +14,7 @@ export class CanItService implements OnDestroy {
 
   can(request: Request) {
     return this.permissionsStore.get().pipe(
-      switchMap(pp => of(this.allow(pp, request)))
+      switchMap(state => of(this.allow(state, request)))
     );
   }
 
@@ -22,9 +22,9 @@ export class CanItService implements OnDestroy {
     this.permissionSubscription.unsubscribe();
   }
 
-  private allow(pp: ProvidedPermissions, [reqAction, reqRi]: Request) {
+  private allow(state: PermissionsState, [reqAction, reqRi]: Request) {
     // currently, it only checks if the exactly provided have the action and ri in provided permissions or not
     // We can support Regex check in the future.
-    return !!pp.allow.find(([action, ri]) => reqAction === action && reqRi === ri)
+    return !!state.allow.find(([action, ri]) => reqAction === action && reqRi === ri)
   }
 }
