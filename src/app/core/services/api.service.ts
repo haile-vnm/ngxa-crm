@@ -1,3 +1,7 @@
+/**
+ * This is a mockup api server, which handled the logic and data as a backend service.
+ */
+
 import { Injectable } from '@angular/core';
 import USERS from '../../__mock-data/users';
 import { of, throwError } from 'rxjs';
@@ -39,5 +43,31 @@ export class ApiService {
     }
     
     return throwError(() => ({ code: 404, message: 'User not found' }))
+  }
+
+  getPermissions(userId: string) {
+    const user = this.users.find(u => u.id === userId);
+
+    return of(this.getPermissionsByRoles(user?.roles || []));
+  }
+
+  private getPermissionsByRoles(roles: string[]) {
+    const rolePerms: { [key: string]: [string, string][] } = {
+      admin: [
+        ['edit', 'user'],
+        ['delete', 'user']
+      ],
+      developer: [
+        ['view', 'user']
+      ],
+      owner: [
+        ['*','*']
+      ]
+    };
+
+    return roles.reduce(
+      (permissions, role) => permissions.concat(rolePerms[role] || []),
+      [] as Array<[string, string]>
+    );
   }
 }
