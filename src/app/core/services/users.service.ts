@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   getCurrent() {
-    return this.current$;
+    return this.current$.asObservable();
   }
 
   loadUsers() {
@@ -35,10 +35,11 @@ export class UsersService {
   getUser(id: string) {
     return this.users$.pipe(
       filter(Boolean),
-      switchMap(users => of(users.find(user => user.id === id))))
+      switchMap(users => of(users.find(user => user.id === id)))
+    );
   }
 
   update(id: string, user: Partial<User>) {
-    return this.apiService.updateUser(id, user)
+    return this.apiService.updateUser(id, user);
   }
 }

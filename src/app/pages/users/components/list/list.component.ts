@@ -10,6 +10,7 @@ import { UsersService } from 'src/app/core/services/users.service';
 })
 export class ListComponent implements OnInit {
   users$: Observable<User[]>;
+  
   constructor(
     private userService: UsersService
   ) {}
@@ -17,5 +18,4 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.users$ = this.userService.getUsers().pipe(filter(Boolean));
   }
-
 }

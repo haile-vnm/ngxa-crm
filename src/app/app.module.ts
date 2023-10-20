@@ -27,6 +27,7 @@ registerLocaleData(en);
   ],
   imports: [
     BrowserModule,
+    AuthorizerModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
@@ -34,7 +35,6 @@ registerLocaleData(en);
     NzLayoutModule,
     NzMenuModule,
     NzEmptyModule,
-    AuthorizerModule.forRoot(),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent } from './users.component';
 import { ListComponent } from './components/list/list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { authorizerGuardFn } from 'src/app/core/guards/authorizer.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersComponent,
     children: [
       {
         path: '',
@@ -16,6 +15,7 @@ const routes: Routes = [
       },
       {
         path: ':id',
+        canActivate: [authorizerGuardFn('edit', 'user')],
         component: EditUserComponent
       }
     ]

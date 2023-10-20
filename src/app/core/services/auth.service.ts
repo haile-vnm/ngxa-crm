@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject, map, tap } from 'rxjs';
-import { Router } from '@angular/router';
+import { BehaviorSubject, tap } from 'rxjs';
+import { PermissionsStore } from 'src/app/shared/modules/authorizer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private loggedIn$ = new BehaviorSubject<boolean>(false);
+  // private loggedIn$ = new BehaviorSubject<boolean>(true);
 
   get authenticated() {
     return this.loggedIn$.asObservable();
@@ -15,24 +16,15 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    private router: Router
+    private permissionsStore: PermissionsStore
   ) {}
 
   login(email: string, password: string) {
     return this.apiService.login(email, password).pipe(
-      tap(() => this.loggedIn$.next(true))
-    );
-  }
-
-  canActivateGuard() {
-    return this.loggedIn$.pipe(
-      map(loggedIn => {
-        if (loggedIn) {
-          return true;
-        }
-
-        this.router.navigate(['auth', 'login']);
-        return false;
+      tap(user => {
+        this.loggedIn$.next(true);
+        this.apiService.getPermissions(user.id)
+          .subscribe(permissions => this.permissionsStore.update({ allow: permissions }));
       })
     );
   }
