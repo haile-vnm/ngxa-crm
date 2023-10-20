@@ -25,8 +25,7 @@ export class AuthService {
     return this.apiService.login(email, password).pipe(
       tap(user => {
         this.userService.setCurrent(user);
-        this.authorizationService.load().subscribe();
-        this.loggedIn$.next(true);
+        this.authorizationService.load().subscribe(() => this.loggedIn$.next(true));
       })
     );
   }
