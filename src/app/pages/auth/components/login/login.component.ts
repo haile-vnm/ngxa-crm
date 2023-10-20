@@ -45,7 +45,6 @@ export class LoginComponent {
 
   private login(email: string, password: string) {
     this.authService.login(email!, password!).subscribe(user => {
-      this.userService.setCurrent(user);
       this.notificationService.create(
         'success',
         'Login',

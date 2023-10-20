@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { filter, switchMap } from 'rxjs';
+import { catchError, filter, first, map, of, switchMap, tap } from 'rxjs';
 import User, { ROLES } from 'src/app/core/models/user';
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class EditUserComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private fb: NonNullableFormBuilder,
     private nzNotiService: NzNotificationService,
+    private authorizationService: AuthorizationService,
     private router: Router,
     private userService: UsersService
   ) {}
@@ -56,16 +58,24 @@ export class EditUserComponent implements OnInit {
   }
 
   private update(data: Partial<User>) {
-    this.userService.update(this.user.id, data).subscribe({
-      next: user => {
+    this.userService.update(this.user.id, data).pipe(
+      tap(user => {
         this.user = user;
         this.nzNotiService.success('User', `Update "${this.user.name}" successfully`);
-        this.router.navigate(['..'], { relativeTo: this.activateRoute })
-      },
-      error: (error) => {
+        this.userService.getCurrent().pipe(
+          filter(Boolean),
+          map(user => this.user.id === user.id),
+          first()
+        ).subscribe(updatingCurrentUser => {
+          const loadPermission = updatingCurrentUser ? this.authorizationService.load() : of(undefined);
+          loadPermission.subscribe(() => this.router.navigate(['..'], { relativeTo: this.activateRoute }))
+        })
+      }),
+      catchError(error => {
         this.nzNotiService.success('User', error.message);
-      }
-    })
+        return error
+      })
+    ).subscribe();
   }
 
   private initialForm() {
